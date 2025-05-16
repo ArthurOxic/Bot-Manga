@@ -1,0 +1,26 @@
+name: Daily Manga Bot
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Runs every day at 6:00 UTC
+  workflow_dispatch:     # Lets you run it manually from the GitHub UI
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 cloudscraper
+
+      - name: Run bot script
+        run: python manga_bot.py
